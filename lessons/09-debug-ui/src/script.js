@@ -4,7 +4,9 @@ import GUI from "lil-gui";
 import gsap from "gsap";
 
 // debug
-const gui = new GUI();
+const gui = new GUI({
+  width: 400,
+});
 const debugObject = {};
 
 /**
@@ -16,13 +18,11 @@ const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
 
-window.addEventListener('keydown', (event) =>
-    {
-        if(event.key == 'h')
-            gui.show(gui._hidden)
-    })
+window.addEventListener("keydown", (event) => {
+  if (event.key == "h") gui.show(gui._hidden);
+});
 
-debugObject.color = "#fefefe";
+debugObject.color = "#65CC5C";
 
 /**
  * Object
@@ -35,9 +35,7 @@ const material = new THREE.MeshBasicMaterial({
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
-const cubeTexture = gui.addFolder("Cube")
-
-
+const cubeTexture = gui.addFolder("Cube");
 
 cubeTexture.add(material, "wireframe");
 
@@ -54,7 +52,7 @@ cubeTexture
   .max(20)
   .step(1)
   .onFinishChange(() => {
-    mesh.geometry.dispose()
+    mesh.geometry.dispose();
     mesh.geometry = new THREE.BoxGeometry(
       1,
       1,
@@ -65,10 +63,10 @@ cubeTexture
     );
   });
 
-debugObject.spin = () => {
+debugObject.doASpin = () => {
   gsap.to(mesh.rotation, { y: mesh.rotation.y + Math.PI * 2 });
 };
-cubeTexture.add(debugObject, "spin");
+cubeTexture.add(debugObject, "doASpin");
 
 /**
  * Sizes
